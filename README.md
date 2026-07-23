@@ -1,4 +1,4 @@
-# PokeVault
+# VaultDex
 
 A full-stack Pokémon card collection manager built with React, TypeScript, Java, Spring Boot, and PostgreSQL.
 
@@ -20,9 +20,9 @@ A full-stack Pokémon card collection manager built with React, TypeScript, Java
 ## Project Structure
 
 ```
-pokevault/
-├── pokevault-api/     # Spring Boot backend
-└── pokevault-web/     # React + Vite frontend
+vaultdex/
+├── vaultdex-api/      # Spring Boot backend
+└── vaultdex-web/      # React + Vite frontend
 ```
 
 ## Getting Started
@@ -41,13 +41,13 @@ Install:
 ## Clone the Repository
 
 ```bash
-git clone https://github.com/esherna7/pokevault.git
-cd pokevault
+git clone https://github.com/esherna7/vaultdex.git
+cd vaultdex
 ```
 
 ## Running the Backend
 
-Open the `pokevault-api` folder in **IntelliJ IDEA Community Edition**.
+Open the `vaultdex-api` folder in **IntelliJ IDEA Community Edition**.
 
 Run the Spring Boot application.
 
@@ -59,7 +59,7 @@ http://localhost:8080
 
 ## Running the Frontend
 
-Open the `pokevault-web` folder in **Visual Studio Code**.
+Open the `vaultdex-web` folder in **Visual Studio Code**.
 
 Install dependencies:
 
