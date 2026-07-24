@@ -33,9 +33,8 @@ Install:
 
 - Java 21
 - Node.js 22+ (or latest LTS)
-- IntelliJ IDEA Community Edition
 - Visual Studio Code
-- PostgreSQL
+- Docker Desktop
 - Git
 
 ## Clone the Repository
@@ -47,9 +46,28 @@ cd vaultdex
 
 ## Running the Backend
 
-Open the `vaultdex-api` folder in **IntelliJ IDEA Community Edition**.
+Open the project in **Visual Studio Code**.
 
-Run the Spring Boot application.
+Start the database:
+
+```bash
+docker compose up -d db
+```
+
+Apply database migrations:
+
+```bash
+docker compose up liquibase
+```
+
+Start the Spring Boot application:
+
+```bash
+cd vaultdex-api
+.\mvnw.cmd spring-boot:run
+```
+
+The backend uses the Docker PostgreSQL database at `localhost:5433`.
 
 The backend will start at:
 
@@ -59,11 +77,12 @@ http://localhost:8080
 
 ## Running the Frontend
 
-Open the `vaultdex-web` folder in **Visual Studio Code**.
+Use the same **Visual Studio Code** workspace.
 
 Install dependencies:
 
 ```bash
+cd vaultdex-web
 npm install
 ```
 

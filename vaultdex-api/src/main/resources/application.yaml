@@ -1,3 +1,6 @@
 spring:
-  application:
-    name: vaultdex
+  datasource:
+    url: jdbc:postgresql://localhost:5433/vaultdex_dev
+    username: vaultdex
+    password: vaultdex_password
+    driver-class-name: org.postgresql.Driver
