@@ -24,7 +24,7 @@ services:
     volumes:
       - ./liquibase/changelog:/liquibase/changelog
     command:
-      - --changelog-file=changelog/db.changelog-master.yaml
+      - --changelog-file=changelog/db.changelog-master.xml
       - --url=jdbc:postgresql://db:5432/vaultdex_dev
       - --username=vaultdex
       - --password=vaultdex_password
