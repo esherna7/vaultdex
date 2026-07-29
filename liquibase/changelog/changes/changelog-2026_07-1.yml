@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
       id: 1
-      author: you
+      author: Esai
       changes:
         - createTable:
-            tableName: creatures
+            tableName: cards
             columns:
               - column:
                   name: id
@@ -17,6 +17,6 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: caught_at
+                  name: obtained_date
                   type: timestamp
                   defaultValueComputed: now()
