@@ -1,17 +1,22 @@
 import { useState } from 'react';
 import './App.css';
 import useCards from './hooks/useCards';
+import { useTcgDexSetById, useTcgDexSets } from './hooks/useTcgDex';
+import Home from './pages/Home';
 
 function App() {
-  const [count, setCount] = useState(0);
-  const data = useCards();
+  // const data = useCards();
+  // const data = useTcgDexSets();
+  // const data = useTcgDexSetById('me03');
+  // console.log('data', data.data);
 
   return (
     <>
-      This is the current count: {count}
-      <button onClick={() => setCount(count + 1)}>Increment</button>
       <div>
-        data from useCards: {JSON.stringify(data.data)}
+        {/* data from useCards: {JSON.stringify(data.data)} */}
+        {/* <img src={`${data.data?.cards?.[0]?.image}.png`} alt="Set Logo" /> */}
+        {/* <button className="bg-sky-500 hover:bg-sky-700">Test button</button> */}
+        <Home />
       </div>
     </>
   )
