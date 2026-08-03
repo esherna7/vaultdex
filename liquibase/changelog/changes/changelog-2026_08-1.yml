@@ -1,0 +1,251 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Esai
+      changes:
+        - createTable:
+            tableName: games
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: code
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: Esai
+      changes:
+        - createTable:
+            tableName: sets
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: game_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_sets_games
+                    references: games(id)
+              - column:
+                  name: code
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: release_date
+                  type: timestamp
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 3
+      author: Esai
+      changes:
+        - addColumn:
+            tableName: cards
+            columns:
+              - column:
+                  name: set_id
+                  type: bigint
+              - column:
+                  name: rarity
+                  type: varchar(64)
+                  remarks: "common | uncommon | rare | ultra_rare | secret_rare"
+              - column:
+                  name: supertype
+                  type: varchar(64)
+              - column:
+                  name: number
+                  type: varchar(64)
+        - addForeignKeyConstraint:
+            baseTableName: cards
+            baseColumnNames: set_id
+            constraintName: fk_cards_sets
+            referencedTableName: sets
+            referencedColumnNames: id
+        - dropColumn:
+            tableName: cards
+            columnName: obtained_date
+        
+  - changeSet:
+      id: 4
+      author: Esai
+      changes:
+        - createTable:
+            tableName: card_variants
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: card_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_card_variants_cards
+                    references: cards(id)
+              - column:
+                  name: variant_type
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+                  remarks: "normal | holo | reverse_holo | first_edition | promo"
+              - column:
+                  name: language
+                  type: varchar(64)
+
+  - changeSet:
+      id: 5
+      author: Esai
+      changes:
+        - createTable:
+            tableName: card_prices
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: card_variant_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_card_prices_card_variants
+                    references: card_variants(id)
+              - column:
+                  name: source
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: captured_at
+                  type: timestamp
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 6
+      author: Esai
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: username
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password_hash
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 7
+      author: Esai
+      changes:
+        - createTable:
+            tableName: collection_items
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_collection_items_users
+                    references: users(id)
+              - column:
+                  name: card_variant_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_collection_items_card_variants
+                    references: card_variants(id)
+              - column:
+                  name: quantity
+                  type: integer
+              - column:
+                  name: obtained_date
+                  type: timestamp
+                  defaultValueComputed: now()
+
+  - changeSet:
+      id: 8
+      author: Esai
+      changes:
+        - createTable:
+            tableName: wishlist_items
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_wishlist_items_users
+                    references: users(id)
+              - column:
+                  name: card_variant_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_wishlist_items_card_variant_id
+                    references: card_variants(id)
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: now()
