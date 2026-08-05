@@ -8,8 +8,8 @@ interface ICardProps {
 
 const Card = ({ id, image, name }: ICardProps) => {
     return (
-        <div id={id} className={`box-border size-32 border`}>
-            <img src={`${image}`} alt={name} />
+        <div id={id} className={`box-border size-32 h-full`}>
+            <img src={`${image}.png`} alt={name} />
             <p>{name}</p>
         </div>
     )

@@ -6,4 +6,8 @@ export const API_ROUTES = {
     //TCGdex API
     TCGDEX_GET_SETS: '/sets',
     TCGDEX_GET_SET_BY_ID: '/sets/:id',
+
+    //User API
+    USER_REGISTER: '/api/users/register',
+    USER_LOGIN: '/api/users/login',
 }

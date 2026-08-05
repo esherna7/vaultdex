@@ -1,16 +1,19 @@
 package io.github.esherna7.vaultdex.entity;
 
+import java.time.Instant;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
 public class User {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -26,10 +29,13 @@ public class User {
     @Column(name = "password_hash")
     private String passwordHash;
 
-    @Column(name = "created_at")
-    private String createdAt;
+    @Column(name = "created_at", updatable = false)
+    private Instant createdAt;
 
-    public User(long id, String email, String username, String passwordHash, String createdAt) {
+    public User() {
+    }
+
+    public User(long id, String email, String username, String passwordHash, Instant createdAt) {
         this.id = id;
         this.email = email;
         this.username = username;
@@ -53,7 +59,7 @@ public class User {
         return passwordHash;
     }
 
-    public String getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
@@ -73,7 +79,14 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (createdAt == null) {
+            createdAt = Instant.now();
+        }
     }
 }

@@ -166,6 +166,13 @@ The frontend will start at:
 http://localhost:5173
 ```
 
+### Sample login
+
+A sample user is available for local testing:
+
+- Username: `esherna`
+- Password: `esherna7`
+
 ## Current Status
 
 🚧 Project setup is in progress.

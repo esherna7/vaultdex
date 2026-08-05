@@ -3,8 +3,13 @@ import { TCGDEX_BASE_URL, API_ROUTES } from "../api/api-config";
 import axios from "axios";
 
 async function fetchSets() {
-    const { data } = await axios.get(`${TCGDEX_BASE_URL}${API_ROUTES.TCGDEX_GET_SETS}`);
-    return data;
+    try {
+        const { data } = await axios.get(`${TCGDEX_BASE_URL}${API_ROUTES.TCGDEX_GET_SETS}`);
+        return data;
+    } catch (error) {
+        console.error("Failed to fetch TCGdex sets:", error);
+        throw error;
+    }
 }
 
 export const useTcgDexSets = () => {
@@ -18,8 +23,13 @@ export const useTcgDexSets = () => {
 }
 
 async function fetchSetById(id: string) {
-    const { data } = await axios.get(`${TCGDEX_BASE_URL}${API_ROUTES.TCGDEX_GET_SET_BY_ID.replace(':id', id)}`);
-    return data;
+    try {
+        const { data } = await axios.get(`${TCGDEX_BASE_URL}${API_ROUTES.TCGDEX_GET_SET_BY_ID.replace(':id', id)}`);
+        return data;
+    } catch (error) {
+        console.error(`Failed to fetch TCGdex set with id ${id}:`, error);
+        throw error;
+    }
 }
 
 export const useTcgDexSetById = (id: string) => {

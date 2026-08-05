@@ -1,5 +1,7 @@
 package io.github.esherna7.vaultdex.service;
 
+import java.time.Instant;
+
 import org.springframework.stereotype.Service;
 import io.github.esherna7.vaultdex.exception.DuplicateEmailException;
 import io.github.esherna7.vaultdex.exception.DuplicateUsernameException;
@@ -30,12 +32,25 @@ public class UserService {
         }
 
         String hashed = passwordEncoder.encode(password);
-        User user = new User(0, email, username, hashed, null);
+        User user = new User(0, email, username, hashed, Instant.now());
         return usersRepository.save(user);
     }
 
     public User findByUsername(String username) {
         return usersRepository.findByUsername(username).orElse(null);
+    }
+
+    public User loginUser(String username, String password) {
+        User user = usersRepository.findByUsername(username).orElse(null);
+        if (user == null) {
+            return null;
+        }
+
+        if (!passwordEncoder.matches(password, user.getPasswordHash())) {
+            return null;
+        }
+
+        return user;
     }
 
 }
