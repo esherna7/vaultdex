@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Esai
+      changes:
+        - createTable:
+            tableName: tracked_sets
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: game_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_tracked_sets_games
+                    references: games(id)
+              - column:
+                  name: set_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_tracked_sets_sets
+                    references: sets(id)
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_tracked_sets_users
+                    references: users(id)
+              - column:
+                  name: tracked_at
+                  type: timestamp
+                  defaultValueComputed: now()
+        - addUniqueConstraint:
+            tableName: tracked_sets
+            columnNames: game_id, set_id, user_id
+            constraintName: uq_tracked_sets_game_set_user
