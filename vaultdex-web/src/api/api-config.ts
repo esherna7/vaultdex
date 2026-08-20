@@ -1,7 +1,8 @@
 export const TCGDEX_BASE_URL = 'https://api.tcgdex.net/v2/en';
 
 export const API_ROUTES = {
-    GET_CARDS: '/api/cards',
+    //Games API
+    GAMES: '/api/games',
 
     //TCGdex API
     TCGDEX_GET_SETS: '/sets',
@@ -10,4 +11,8 @@ export const API_ROUTES = {
     //User API
     USER_REGISTER: '/api/users/register',
     USER_LOGIN: '/api/users/login',
+
+    //Tracked Sets API
+    TRACK_SET: '/api/trackedSets',
+    UNTRACK_SET: '/api/trackedSets/:id',
 }

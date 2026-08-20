@@ -1,8 +1,9 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import SetCard from "../components/card/SetCard";
+import { useCurrentUser } from "../hooks/useUsers";
+import { type TrackedSet, useTrackedSets } from "../hooks/useTrackedSets";
 
-const trackedSets = [
+const allSets = [
     { id: "sv08.5", name: "Prismatic Evolutions", logo: "https://assets.tcgdex.net/en/sv/sv08.5/logo.png" },
     { id: "me02", name: "Phantasmal Flames", logo: "https://assets.tcgdex.net/en/me/me02/logo.png" },
     { id: "me03", name: "Perfect Order", logo: "https://assets.tcgdex.net/en/me/me03/logo.png" },
@@ -13,6 +14,13 @@ const trackedSets = [
 
 const Dashboard = () => {
     const navigate = useNavigate();
+    const { data: currentUser, isPending } = useCurrentUser();
+    const trackedSets = useTrackedSets(currentUser?.id);
+    const trackedSetCodes = new Set(
+        (trackedSets.data as TrackedSet[] | undefined)?.map((trackedSet) => trackedSet.setCode) ?? []
+    );
+    const trackedSetCards = allSets.filter((set) => trackedSetCodes.has(set.id));
+    const untrackedSetCards = allSets.filter((set) => !trackedSetCodes.has(set.id));
 
     const handleSetClick = (setId: string) => {
         navigate(`/sets/${setId}`);
@@ -23,7 +31,21 @@ const Dashboard = () => {
             <h1>Dashboard</h1>
             <div>Tracked Sets</div>
             <div className="grid grid-cols-4 gap-4 place-items-center">
-                {trackedSets.map((set) => (
+                {!isPending && trackedSetCards.map((set) => (
+                    <SetCard
+                        key={set.id}
+                        setId={set.id}
+                        setName={set.name}
+                        setLogoUrl={set.logo}
+                        onClick={() => handleSetClick(set.id)}
+                    />
+                ))}
+            </div>
+            <br/>
+            <hr/>
+            <div>All Sets</div>
+            <div className="grid grid-cols-4 gap-4 place-items-center">
+                {untrackedSetCards.map((set) => (
                     <SetCard
                         key={set.id}
                         setId={set.id}

@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Esai
+      changes:
+        - insert:
+            tableName: games
+            columns:
+              - column:
+                  name: code
+                  value: "pokemon"
+              - column:
+                  name: name
+                  value: "Pokemon"
+                  

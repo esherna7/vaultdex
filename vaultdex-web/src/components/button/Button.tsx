@@ -2,7 +2,7 @@ import React from 'react';
 
 interface IButtonProps {
     label: string;
-    onClick?: () => void;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const Button = ({ label, onClick, className }: IButtonProps & { className?: string }) => {
